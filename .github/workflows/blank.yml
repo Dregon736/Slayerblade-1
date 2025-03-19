@@ -1,0 +1,118 @@
+-- Переконайся, що використовуєш KRNL або Synapse X
+if not game or not game:GetService then return end
+
+-- Бібліотека для GUI
+local Library = loadstring(game:HttpGet("https://raw.githubusercontent.com/bloodball/-back-ups-for-libs/main/uilib"))()
+
+-- Створюємо GUI
+local Window = Library:Window("Slayer Blade Hack", Color3.fromRGB(44, 120, 224), Enum.KeyCode.RightControl)
+
+-- Вкладка "Фарм"
+local FarmingTab = Window:Tab("Фарм")
+
+-- Функція для пошуку потрібного RemoteEvent або RemoteFunction
+local function getRemote(name)
+    for _, v in pairs(game:GetService("ReplicatedStorage"):GetChildren()) do
+        if v:IsA("RemoteEvent") or v:IsA("RemoteFunction") then
+            if string.find(string.lower(v.Name), string.lower(name)) then
+                return v
+            end
+        end
+    end
+    return nil
+end
+
+-- Фарм душ
+FarmingTab:Toggle("Фарм Душ (5M)", function(state)
+    local soulEvent = getRemote("soul")
+    if not soulEvent then return end
+    
+    while state do
+        soulEvent:FireServer()
+        wait(0.1)
+    end
+end)
+
+-- Покупка гемів
+FarmingTab:Button("Купити всі Level 14-15 Gems", function()
+    local buyGemEvent = getRemote("buygem")
+    if not buyGemEvent then return end
+
+    for i = 14, 15 do
+        buyGemEvent:FireServer(i)
+        wait(0.1)
+    end
+end)
+
+-- Прокачка дихання
+FarmingTab:Button("Максимальний рівень дихання (30)", function()
+    local breathEvent = getRemote("breath")
+    if not breathEvent then return end
+
+    for i = 1, 30 do
+        breathEvent:FireServer()
+        wait(0.1)
+    end
+end)
+
+-- Грінд Mythic
+FarmingTab:Button("Фарм Mythic (Mask-Back-Awaken)", function()
+    local mythicEvent = getRemote("mythic")
+    if not mythicEvent then return end
+
+    for i = 1, 100 do
+        mythicEvent:FireServer()
+        wait(0.1)
+    end
+end)
+
+-- Телепорт до останньої карти
+FarmingTab:Button("Телепорт на останню карту", function()
+    local teleportEvent = getRemote("teleport")
+    if not teleportEvent then return end
+
+    teleportEvent:FireServer(15)
+end)
+
+-- Прокачка множника гемів
+FarmingTab:Slider("Gems Amplifier (Map10)", 0, 1000, function(value)
+    local ampEvent = getRemote("gemsamp")
+    if not ampEvent then return end
+
+    ampEvent:FireServer(value)
+end)
+
+-- Talisman Roll
+FarmingTab:Slider("Talisman Roll (max 1000)", 1, 1000, function(value)
+    local rollEvent = getRemote("talisman")
+    if not rollEvent then return end
+
+    for i = 1, value do
+        rollEvent:FireServer()
+        wait(0.1)
+    end
+end)
+
+-- Отримання Gold Key Halo
+FarmingTab:Button("5000 Gold Key Halo", function()
+    local keyEvent = getRemote("goldkey")
+    if not keyEvent then return end
+
+    for i = 1, 5000 do
+        keyEvent:FireServer()
+        wait(0.1)
+    end
+end)
+
+-- Авто-прокачка гемів
+FarmingTab:Toggle("Авто-прокачка гемів", function(state)
+    local upgradeEvent = getRemote("upgradegems")
+    if not upgradeEvent then return end
+
+    while state do
+        upgradeEvent:FireServer()
+        wait(0.1)
+    end
+end)
+
+print("✅ GUI-меню успішно завантажене! Натисни RightControl для відкриття.")
