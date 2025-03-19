@@ -1,7 +1,5 @@
--- Переконайся, що використовуєш KRNL або Synapse X
-if not game or not game:GetService then return end
+Бібліотека для GUI
 
--- Бібліотека для GUI
 local Library = loadstring(game:HttpGet("https://raw.githubusercontent.com/bloodball/-back-ups-for-libs/main/uilib"))()
 
 -- Створюємо GUI
